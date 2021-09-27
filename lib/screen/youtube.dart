@@ -13,6 +13,9 @@ class Youtube extends StatelessWidget {
   // なぜか追加された。
   Youtube({Key? key}) : super(key: key);
 
+  // AppBarのサイズ測定のため、グローバル変数としてGlobalKey型の変数（プロパティ）を定義
+  GlobalKey globalKeyAppBar = GlobalKey();
+
 
   // 表示中の Widget を取り出すための index としての int 型の mutable な stored property
   int _selectedIndex = 0;
@@ -38,6 +41,9 @@ class Youtube extends StatelessWidget {
     // Itemのcellの幅を取得
     cellWidth = width / 2;
 
+    var appBarHeight = AppBar().preferredSize.height;
+
+
     return Scaffold(
       backgroundColor: Colors.grey,
       appBar: AppBar(
@@ -45,11 +51,23 @@ class Youtube extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.black,
 
-        // youtubeアイコン
-        leading: Image.asset('images/youtubeicon.png'),
-
         // ボタンの配置
         actions: <Widget>[
+          // youtubeアイコン
+          SizedBox(
+            height: appBarHeight,
+            width: 100,
+            child: TextButton(
+              onPressed: () {
+                print('youtubeアイコンがタップされました');
+              },
+              child: Image.asset(
+                'images/youtubeicon.png',
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+          const Spacer(),
           _createFunctionButton(Icons.cast, '画面共有ボタンがタップされました'),
           _createFunctionButton(Icons.notifications_none, '通知ボタンがタップされました'),
           _createFunctionButton(Icons.search_rounded, '検索ボタンがタップされました'),
@@ -65,14 +83,16 @@ class Youtube extends StatelessWidget {
 
   // AppBarの機能ウィジェットの作成
   Widget _createFunctionButton(IconData icon, String printText) {
-    return Row(children: [
-      IconButton(
-        icon: Icon(icon),
-        onPressed: () {
-          print(printText);
-        },
-      ),
-    ]);
+    return Row(
+      children: [
+        IconButton(
+          icon: Icon(icon),
+          onPressed: () {
+            print(printText);
+          },
+        ),
+      ],
+    );
   }
 }
 
@@ -109,25 +129,35 @@ Widget _createItemButton(String? text, IconData? iconName, Color? color, double 
 }
 
 Widget ItemView(double cellWidth, double cellHeight) {
-  return Column(
-    children: [
-      Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-        _createItemButton('急上昇', Icons.local_fire_department_sharp, Colors.red, cellWidth, cellHeight),
-        _createItemButton('音楽', Icons.music_note, Colors.green, cellWidth, cellHeight),
-      ]),
-      Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-        _createItemButton('ゲーム', Icons.videogame_asset, Colors.pink, cellWidth, cellHeight),
-        _createItemButton('ニュース', Icons.text_snippet, Colors.blue, cellWidth, cellHeight),
-      ]),
-      Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-        _createItemButton('学び', Icons.lightbulb, Colors.lightGreen, cellWidth, cellHeight),
-        _createItemButton('ライブ', Icons.live_tv_outlined, Colors.orange, cellWidth, cellHeight),
-      ]),
-      Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-        _createItemButton('スポーツ', Icons.sports, Colors.lightBlue, cellWidth, cellHeight),
-        _createItemButton(null, null, null, cellWidth, cellHeight)
-      ]),
-    ],
+  return Container(
+    color: Colors.black,
+    child: Column(
+      children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          _createItemButton('急上昇', Icons.local_fire_department_sharp,
+              Colors.red, cellWidth, cellHeight),
+          _createItemButton(
+              '音楽', Icons.music_note, Colors.green, cellWidth, cellHeight),
+        ]),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          _createItemButton(
+              'ゲーム', Icons.videogame_asset, Colors.pink, cellWidth, cellHeight),
+          _createItemButton(
+              'ニュース', Icons.text_snippet, Colors.blue, cellWidth, cellHeight),
+        ]),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          _createItemButton(
+              '学び', Icons.lightbulb, Colors.lightGreen, cellWidth, cellHeight),
+          _createItemButton('ライブ', Icons.live_tv_outlined, Colors.orange,
+              cellWidth, cellHeight),
+        ]),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          _createItemButton(
+              'スポーツ', Icons.sports, Colors.lightBlue, cellWidth, cellHeight),
+          _createItemButton(null, null, null, cellWidth, cellHeight)
+        ]),
+      ],
+    ),
   );
 }
 
@@ -145,22 +175,17 @@ Widget VideoView(String image, String title, String channelName, int playTimes, 
             child: const Icon(Icons.account_circle),
           ),
           // 名前を表示
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                  title,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis
-              ),
-              Text(
-                  '$channelName・$playTimes回・$distributionTime',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis
-              ),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, maxLines: 2, overflow: TextOverflow.ellipsis),
+                Text('$channelName・$playTimes回・$distributionTime',
+                    maxLines: 2, overflow: TextOverflow.ellipsis),
+              ],
+            ),
           ),
-          const Spacer(),
+          //const Spacer(),
           TextButton(
             onPressed: () {
               print('動画詳細がタップされました');
@@ -202,18 +227,14 @@ Widget Body(double cellWidth, double cellHeight) {
 
 // BottomBarButtonの作成
 Widget bottomNavigationBar() {
-  //backgroundColor: Colors.white;
-  //type: BottomNavigationBarType.fixed;
-  //unselectedItemColor: Colors.white;
-  //selectedItemColor: Colors.red;
-
   int _currentIndex = 0;
 
   return BottomNavigationBar(
     currentIndex: _currentIndex,
     fixedColor: Colors.blueAccent,
-    //onTap: _onItemTapped,
     type: BottomNavigationBarType.fixed,
+    backgroundColor: Colors.black,
+    unselectedItemColor: Colors.white,
     items: const [
       BottomNavigationBarItem(
         icon: Icon(Icons.home),

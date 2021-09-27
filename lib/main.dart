@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+//import 'package:flutter/rendering.dart';
 import 'package:youtubescreen/screen/home.dart';
 import 'package:youtubescreen/screen/youtube.dart';
 
 void main() {
+  //debugPaintSizeEnabled = true;
   runApp(MyApp());
 }
 
