@@ -145,12 +145,12 @@ Widget ItemView(double cellWidth, double cellHeight) {
           _createItemButton(
               'ニュース', Icons.text_snippet, Colors.blue, cellWidth, cellHeight),
         ]),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          _createItemButton(
-              '学び', Icons.lightbulb, Colors.lightGreen, cellWidth, cellHeight),
-          _createItemButton('ライブ', Icons.live_tv_outlined, Colors.orange,
-              cellWidth, cellHeight),
-        ]),
+        //Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        //  _createItemButton(
+        //      '学び', Icons.lightbulb, Colors.lightGreen, cellWidth, cellHeight),
+        //  _createItemButton('ライブ', Icons.live_tv_outlined, Colors.orange,
+        //      cellWidth, cellHeight),
+        //]),
         //Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         //  _createItemButton(
         //      'スポーツ', Icons.sports, Colors.lightBlue, cellWidth, cellHeight),
