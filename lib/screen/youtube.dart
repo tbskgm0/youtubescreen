@@ -151,11 +151,11 @@ Widget ItemView(double cellWidth, double cellHeight) {
           _createItemButton('ライブ', Icons.live_tv_outlined, Colors.orange,
               cellWidth, cellHeight),
         ]),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          _createItemButton(
-              'スポーツ', Icons.sports, Colors.lightBlue, cellWidth, cellHeight),
-          _createItemButton(null, null, null, cellWidth, cellHeight)
-        ]),
+        //Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        //  _createItemButton(
+        //      'スポーツ', Icons.sports, Colors.lightBlue, cellWidth, cellHeight),
+        //  _createItemButton(null, null, null, cellWidth, cellHeight)
+        //]),
       ],
     ),
   );
